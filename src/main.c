@@ -1,18 +1,8 @@
-/*
- *
- *
- *
- * the dev is dumb lol work on it after I smarting
- *
- *
- *
-*/
-
 #include <stdio.h>
 #include <unistd.h>
 
 #define SCREEN_WIDTH 50
-#define SCREEN_HEIGHT 50
+#define SCREEN_HEIGHT 20
 
 typedef struct player
 {
@@ -33,10 +23,18 @@ typedef struct ball
 } ball;
 
 // SEC_INIT
-void init(player *player, ball *ball)
+void init_player(player *player)
 {
-    player->posx = 0;
-    player->posy = 
+
+}
+
+void init_ball(ball *ball)
+{
+    ball->posx = 4;
+    ball->posy = 10;
+    ball->radius = 1;
+    ball->speedx = 1;
+    ball->speedy = 1;
 }
 
 // SEC_DRAW
@@ -48,26 +46,89 @@ void screen_clear()
                       // top left 
 }
 
-void draw()
+void draw(player player, ball ball)
 {
     for(int i = 0; i < SCREEN_HEIGHT; i++)
     {
-        for(int j = 0; j < SCREEN_HEIGHT; j++)
+        for(int j = 0; j < SCREEN_WIDTH; j++)
         {
-            printf("#");
+            if(i == 0 || i == SCREEN_HEIGHT - 1 || j == 0 || j == SCREEN_WIDTH - 1)
+            {
+                printf("#");
+            }
+            else if(j == ball.posx && i == ball.posy)
+            {
+                printf("@");
+            }
+            else
+            {
+                printf("-");
+            }
         }
         printf("\n");
     }
 }
 
-// SEC_LOGIC
+void debug_player(player player)
+{
+    printf("player: posx = %d, posy = %d, width = %d, height = %d, speed = %d",
+            player.posx, player.posy, player.width, player.height, player.speed);
+}
 
+void debug_ball(ball ball)
+{
+    printf("ball: posx = %d, posy = %d, speedx = %d, speedy = %d, radius = %d",
+            ball.posx, ball.posy, ball.speedx, ball.speedy, ball.radius);
+}
+
+// SEC_LOGIC
+void logic_player(player *player);
+
+void logic_ball(ball *ball)
+{
+    ball->posx += ball->speedx;
+    ball->posy += ball->speedy;
+
+    if(ball->posx > SCREEN_WIDTH - 2)
+    {
+        ball->speedx *= -1;
+        ball->posx = SCREEN_WIDTH - 3;
+    }
+    if(ball->posx < 1)
+    {
+        ball->speedx *= -1;
+        ball->posx = 2;
+    }
+
+    if(ball->posy > SCREEN_HEIGHT - 2)
+    {
+        ball->speedy *= -1;
+        ball->posy = SCREEN_HEIGHT - 3;
+    }
+    if(ball->posy < 1)
+    {
+        ball->speedy *= -1;
+        ball->posy = 2;
+    }
+}
 
 int main()
 {
+    player player;
+    ball ball;
+
+    init_player(&player);
+    init_ball(&ball);
+
     for(;;)
     {
         screen_clear();
+        logic_ball(&ball);
+        draw(player, ball);
+
+        debug_player(player);
+        printf("\n");
+        debug_ball(ball);
 
         fflush(stdout); //UNDEFINED! idc lolz
         sleep(1);
