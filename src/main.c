@@ -1,11 +1,43 @@
+/*
+ *
+ *
+ *
+ * the dev is dumb lol work on it after I smarting
+ *
+ *
+ *
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 
 #define SCREEN_WIDTH 50
 #define SCREEN_HEIGHT 50
 
-// SEC_INIT
+typedef struct player
+{
+    int posx;
+    int posy;
+    int width;
+    int height;
+    int speed;
+} player;
 
+typedef struct ball
+{
+    int posx;
+    int posy;
+    int radius;
+    int speedx;
+    int speedy;
+} ball;
+
+// SEC_INIT
+void init(player *player, ball *ball)
+{
+    player->posx = 0;
+    player->posy = 
+}
 
 // SEC_DRAW
 void screen_clear()
@@ -37,6 +69,7 @@ int main()
     {
         screen_clear();
 
+        fflush(stdout); //UNDEFINED! idc lolz
         sleep(1);
     }
 
