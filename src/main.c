@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define SCREEN_WIDTH 50
-#define SCREEN_HEIGHT 20
+#define SCREEN_WIDTH 15
+#define SCREEN_HEIGHT 15
 
 typedef struct player
 {
@@ -48,11 +48,11 @@ void screen_clear()
 
 void draw(player player, ball ball)
 {
-    for(int i = 0; i < SCREEN_HEIGHT; i++)
+    for(int i = 1; i <= SCREEN_HEIGHT; i++)
     {
-        for(int j = 0; j < SCREEN_WIDTH; j++)
+        for(int j = 1; j <= SCREEN_WIDTH; j++)
         {
-            if(i == 0 || i == SCREEN_HEIGHT - 1 || j == 0 || j == SCREEN_WIDTH - 1)
+            if(i == 1 || i == SCREEN_HEIGHT || j == 1 || j == SCREEN_WIDTH)
             {
                 printf("#");
             }
@@ -89,26 +89,26 @@ void logic_ball(ball *ball)
     ball->posx += ball->speedx;
     ball->posy += ball->speedy;
 
-    if(ball->posx > SCREEN_WIDTH - 2)
+    if(ball->posx > SCREEN_WIDTH - 1)
     {
         ball->speedx *= -1;
-        ball->posx = SCREEN_WIDTH - 3;
+        ball->posx = SCREEN_WIDTH - 2;
     }
-    if(ball->posx < 1)
+    if(ball->posx < 2)
     {
         ball->speedx *= -1;
-        ball->posx = 2;
+        ball->posx = 3;
     }
 
-    if(ball->posy > SCREEN_HEIGHT - 2)
+    if(ball->posy > SCREEN_HEIGHT - 1)
     {
         ball->speedy *= -1;
-        ball->posy = SCREEN_HEIGHT - 3;
+        ball->posy = SCREEN_HEIGHT - 2;
     }
-    if(ball->posy < 1)
+    if(ball->posy < 2)
     {
         ball->speedy *= -1;
-        ball->posy = 2;
+        ball->posy = 3;
     }
 }
 
